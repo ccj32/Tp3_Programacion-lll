@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Filtro de palabras</title>
+  <link rel="stylesheet" href="filtro.css" />
+</head>
+<body>
+
+  <h1>Filtro de Palabras</h1>
+
+  <form id="formFiltro">
+    <div class="campo">
+      <label for="textoFiltro">Buscar palabra:</label>
+      <input type="text" id="textoFiltro" name="textoFiltro" />
+    </div>
+    
+    <div class="campo">
+      <button type="submit">Filtrar</button>
+    </div>
+  </form>
+
+  <div id="error"></div>
+  <ul id="listaPalabras"></ul>
+
+  <script src="filtro.js"></script>
+</body>
+</html>
