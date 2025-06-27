@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>API (GET)</title>
+  <link rel="stylesheet" href="api.css" />
+</head>
+<body>
+  <h1>Api(GET)</h1>
+  <p>
+    Haz clic en “Cargar tareas” para obtener la lista desde JSONPlaceholder,
+    filtrar las que estén completadas y
+    mostrarlas debajo.
+  </p>
+
+  <button id="cargar-btn">Cargar tareas</button>
+  <div id="cargando" style="display: none;">Cargando tareas...</div>
+
+  <div id="tareas-completadas"></div>
+  <div id="error-msg" class="error"></div>
+
+  <script src="api.js"></script>
+</body>
+</html>
