@@ -1,38 +1,31 @@
-const todosEndpoint = "https://jsonplaceholder.typicode.com/todos";
-const cargarBtn = document.getElementById("cargar-btn");
-const cargandoDiv = document.getElementById("cargando");
-const contenedorTareas = document.getElementById("tareas-completadas");
-const errorDiv = document.getElementById("error-msg");
+const endpointTareas   = "https://jsonplaceholder.typicode.com/todos";
+const botonCargar      = document.getElementById("cargar-btn");
+const listaTareas      = document.getElementById("lista-completadas");
+const divError         = document.getElementById("error");
 
-cargarBtn.addEventListener("click", async () => {
-  contenedorTareas.innerHTML = "";
-  errorDiv.textContent = "";
-  cargandoDiv.style.display = "block";
+botonCargar.addEventListener("click", () => {
+  listaTareas.innerHTML = "";
+  divError.textContent = "";
 
-  try {
-    const respuesta = await fetch(todosEndpoint);
-    if (!respuesta.ok) {
-      throw new Error(`Error de red: ${respuesta.status}`);
-    }
+  fetch(endpointTareas)
+    .then(respuesta => {
+      if (!respuesta.ok) throw new Error(`${respuesta.status} ${respuesta.statusText}`);
+      return respuesta.json();
+    })
+    .then(tareas => {
+      const completadas = tareas.filter(tarea => tarea.completed);
 
-    const todos = await respuesta.json();
-    const completadas = todos.filter(t => t.completed === true);
-
-    if (completadas.length === 0) {
-      contenedorTareas.innerHTML = "<p>No hay tareas completadas.</p>";
-    } else {
-      const ul = document.createElement("ul");
-      completadas.forEach(tarea => {
-        const li = document.createElement("li");
-        li.textContent = tarea.title;
-        ul.appendChild(li);
-      });
-      contenedorTareas.innerHTML = `<h3>Tareas completadas </h3>`;
-      contenedorTareas.appendChild(ul);
-    }
-  } catch (err) {
-    errorDiv.textContent = `No se pudieron cargar las tareas: ${err.message}`;
-  } finally {
-    cargandoDiv.style.display = "none";
-  }
+      if (completadas.length === 0) {
+        listaTareas.innerHTML = "<li>No hay tareas completadas.</li>";
+      } else {
+        completadas.forEach(tarea => {
+          const li = document.createElement("li");
+          li.textContent = `(${tarea.id}) ${tarea.title}`;
+          listaTareas.appendChild(li);
+        });
+      }
+    })
+    .catch(error => {
+      divError.textContent = `No se pudieron cargar las tareas: ${error.message}`;
+    });
 });
